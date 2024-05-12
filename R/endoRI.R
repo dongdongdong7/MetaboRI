@@ -8,7 +8,13 @@
 #' @export
 #'
 #' @examples
-#' predictCar_res <- predictCar(car_tibble = standard_car)
+#' data("experimental_car", package = "MetaboRI")
+#' predictCar_res <- predictCar(car_tibble = experimental_car)
+#' predictCar_res$slope
+#' predictCar_res$intercept
+#' predictCar_res$r_squared
+#' predictCar_res$car_tibble
+#' predictCar_res$p
 predictCar <- function(car_tibble){
   car_tibble$lnC <- log(as.integer(stringr::str_replace(car_tibble$carnitine, "C", "")))
   predicted_car <- car_tibble %>%
@@ -40,5 +46,5 @@ predictCar <- function(car_tibble){
   car_tibble <- rbind(car_tibble, model_car, predicted_car) %>%
     dplyr::select(id, name, rt, carnitine, ri, exactmass, formula, smiles, inchi, inchikey, predicted) %>%
     dplyr::arrange(ri)
-  return(list(slope = slope, intercept = intercept, r_squared = r_squared, car_tibble = car_tibble))
+  return(list(slope = slope, intercept = intercept, r_squared = r_squared, p = p, car_tibble = car_tibble))
 }
