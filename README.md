@@ -159,7 +159,7 @@ experimental_car <- ResList$lc_tibble
 ResList$p
 ```
 
-![image-20240515165339245](.\assets\image-20240515165339245.png)
+<img src=".\assets\image-20240515165339245.png" alt="image-20240515165339245" style="zoom:67%;" />
 
 ```R
 ResList <- lc2rt(lc_tibble = standard_car, targetRt = max(experimental_data$rt))
@@ -167,7 +167,7 @@ standard_car <- ResList$lc_tibble
 ResList$p
 ```
 
-![image-20240515165414844](.\assets\image-20240515165414844.png)
+<img src=".\assets\image-20240515165414844.png" alt="image-20240515165414844" style="zoom: 67%;" />
 
 ### Set dead time
 
