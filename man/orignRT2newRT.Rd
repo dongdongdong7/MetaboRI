@@ -9,9 +9,9 @@ orignRT2newRT(experimental_data, experimental_lc, standard_lc, thread = 1)
 \arguments{
 \item{experimental_data}{experimental_data tibble.}
 
-\item{experimental_lc}{This is the lc_tibble of the correction substance corresponding to the experimental data.}
+\item{experimental_lc}{This is the lc_tibble of the correction metabolite corresponding to the experimental data.}
 
-\item{standard_lc}{This is the lc_tibble of the correction substance corresponding to the standard chromatographic condition.}
+\item{standard_lc}{This is the lc_tibble of the correction metabolite corresponding to the standard chromatographic condition.}
 
 \item{thread}{The number of parallel thread.}
 }

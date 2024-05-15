@@ -9,7 +9,7 @@ rt2ri(rt, experimental_lc)
 \arguments{
 \item{rt}{A vector of experimental data rt.}
 
-\item{experimental_lc}{This is the lc_tibble of the correction substance corresponding to the experimental data.}
+\item{experimental_lc}{This is the lc_tibble of the correction metabolite corresponding to the experimental data.}
 }
 \value{
 A vector of ri.
