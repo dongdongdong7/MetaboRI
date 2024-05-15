@@ -159,7 +159,7 @@ experimental_car <- ResList$lc_tibble
 ResList$p
 ```
 
-<img src="D:\fudan\Projects\2023\MetaboRI\Progress\build_package\MetaboRI\assets\image-20240515153642876.png" alt="image-20240515153642876" style="zoom: 50%;" />
+![image-20240515153642876](D:\fudan\Projects\2023\MetaboRI\Progress\build_package\MetaboRI\assets\image-20240515153642876.png)
 
 ```R
 ResList <- lc2rt(lc_tibble = standard_car, targetRt = max(experimental_data$rt))
@@ -167,7 +167,7 @@ standard_car <- ResList$lc_tibble
 ResList$p
 ```
 
-<img src="D:\fudan\Projects\2023\MetaboRI\Progress\build_package\MetaboRI\assets\image-20240515153730135.png" alt="image-20240515153730135" style="zoom:50%;" />
+![image-20240515153730135](D:\fudan\Projects\2023\MetaboRI\Progress\build_package\MetaboRI\assets\image-20240515153730135.png)
 
 ### Set dead time
 
