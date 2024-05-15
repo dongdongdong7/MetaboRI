@@ -4,10 +4,12 @@
 \alias{predictCar}
 \title{predictCar}
 \usage{
-predictCar(car_tibble)
+predictCar(car_tibble, targetRt)
 }
 \arguments{
 \item{car_tibble}{A car_tibble.}
+
+\item{targetRt}{Target retention time, the maximum retention time you want to predict.}
 }
 \value{
 A list.
