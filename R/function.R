@@ -155,7 +155,7 @@ compare_lc_tibble <- function(experimental_lc, standard_lc){
 #' @param rt
 #' A vector of experimental data rt.
 #' @param experimental_lc
-#' This is the lc_tibble of the correction substance corresponding to the experimental data.
+#' This is the lc_tibble of the correction metabolite corresponding to the experimental data.
 #'
 #' @return A vector of ri.
 #' @export
@@ -198,9 +198,10 @@ rt2ri <- function(rt, experimental_lc){
 #' Convert experimental retention time to standard retention time.
 #'
 #' @param experimental_data experimental_data tibble.
-#' @param experimental_lc This is the lc_tibble of the correction substance corresponding to the experimental data.
+#' @param experimental_lc
+#' This is the lc_tibble of the correction metabolite corresponding to the experimental data.
 #' @param standard_lc
-#' This is the lc_tibble of the correction substance corresponding to the standard chromatographic condition.
+#' This is the lc_tibble of the correction metabolite corresponding to the standard chromatographic condition.
 #' @param thread The number of parallel thread.
 #'
 #' @return A new experimental data.
