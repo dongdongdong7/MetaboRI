@@ -16,6 +16,7 @@
 #' experimental_car <- ResList$lc_tibble
 #' ResList$p
 lc2rt <- function(lc_tibble, targetRt){
+  #maxC0 <- max(lc_tibble$lc)
   lc_tibble$lnC <- log(lc_tibble$lc)
   predicted_lc <- lc_tibble %>%
     dplyr::filter(predicted) %>%
@@ -48,6 +49,10 @@ lc2rt <- function(lc_tibble, targetRt){
   df <- lc_tibble %>%
     dplyr::filter(lc > 0) %>%
     dplyr::arrange(lnC)
+  # df <- lc_tibble %>%
+  #   dplyr::filter(lc > 0) %>%
+  #   dplyr::arrange(lnC) %>%
+  #   dplyr::filter(lc < maxC0 | lc == max(lc))
   p <- ggplot2::ggplot(df) +
     ggplot2::geom_point(ggplot2::aes(x = lnC, y = rt, color = predicted), shape = 19, size = 3) +
     ggplot2::scale_color_manual(values = c("FALSE" = "black", "TRUE" = "blue")) +
@@ -59,6 +64,9 @@ lc2rt <- function(lc_tibble, targetRt){
                          color = "red", linewidth = 1, linetype = 2)
   lc_tibble <- lc_tibble %>%
     dplyr::select(id, name, rt, lc, ri, exactmass, formula, smiles, inchi, inchikey, predicted)
+  # lc_tibble <- lc_tibble %>%
+  #   dplyr::select(id, name, rt, lc, ri, exactmass, formula, smiles, inchi, inchikey, predicted) %>%
+  #   dplyr::filter(lc < maxC0 | lc == max(lc))
   return(list(slope = slope, intercept = intercept, r_squared = r_squared, p = p, lc_tibble = lc_tibble))
 }
 
