@@ -35,15 +35,22 @@ lc2rt <- function(lc_tibble, targetRt){
   lc_tibble_tmp <- lc_tibble %>% dplyr::filter(lc <= 0)
   lc_tibble <- rbind(lc_tibble_tmp, model_lc, predicted_lc) %>%
     dplyr::arrange(ri)
-  maxRt <- max(lc_tibble$rt)
+  maxRt <- max(lc_tibble$rt, na.rm = TRUE)
   if(targetRt < maxRt) targetRt <- maxRt
-  maxC <- max(lc_tibble$lc)
+  maxC <- max(lc_tibble$lc, na.rm = TRUE)
+  ncol_lc_tibble <- ncol(lc_tibble)
+  lc_tibble_col_name <- colnames(lc_tibble)
   while(maxRt < targetRt){
     maxC <- maxC + 1
     maxRt <- slope * log(maxC) + intercept
-    lc_tibble_tmp <- dplyr::tibble(id = NA, name = NA, rt = maxRt, lc = maxC, ri = maxC * 100,
-                                    exactmass = NA, formula = NA, smiles = NA, inchi = NA, inchikey = NA, predicted = TRUE,
-                                   lnC = log(maxC))
+    lc_tibble_tmp <- dplyr::as_tibble(matrix(NA, nrow = 1, ncol = ncol_lc_tibble, dimnames = list(NULL, lc_tibble_col_name)))
+    lc_tibble_tmp$rt <- maxRt
+    lc_tibble_tmp$ri <- maxC * 100
+    lc_tibble_tmp$predicted <- TRUE
+    lc_tibble_tmp$lnC <- log(maxC)
+    # lc_tibble_tmp <- dplyr::tibble(id = NA, name = NA, rt = maxRt, lc = maxC, ri = maxC * 100,
+    #                                 exactmass = NA, formula = NA, smiles = NA, inchi = NA, inchikey = NA, predicted = TRUE,
+    #                                lnC = log(maxC))
     lc_tibble <- rbind(lc_tibble, lc_tibble_tmp)
   }
   df <- lc_tibble %>%
@@ -63,7 +70,7 @@ lc2rt <- function(lc_tibble, targetRt){
                          ggplot2::aes(intercept = intercept, slope = slope),
                          color = "red", linewidth = 1, linetype = 2)
   lc_tibble <- lc_tibble %>%
-    dplyr::select(id, name, rt, lc, ri, exactmass, formula, smiles, inchi, inchikey, predicted)
+    dplyr::select(lc_tibble_col_name)
   # lc_tibble <- lc_tibble %>%
   #   dplyr::select(id, name, rt, lc, ri, exactmass, formula, smiles, inchi, inchikey, predicted) %>%
   #   dplyr::filter(lc < maxC0 | lc == max(lc))
