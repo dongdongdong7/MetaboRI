@@ -100,10 +100,16 @@ lc2rt <- function(lc_tibble, targetRt){
 #' experimental_car <- deadTime_add(lc_tibble = experimental_car, deadTime = min(experimental_data$rt))
 #' standard_car <- deadTime_add(lc_tibble = standard_car, deadTime = min(experimental_data$rt))
 deadTime_add <- function(lc_tibble, deadTime = 0){
+  ncol_lc_tibble <- ncol(lc_tibble)
+  lc_tibble_col_name <- colnames(lc_tibble)
   if(deadTime >= min(lc_tibble$rt)) stop("deadTime wrong!")
-  car_tibble_tmp <- dplyr::tibble(id = NA, name = NA, rt = deadTime, lc = -1,
-                                  ri = -100, exactmass = NA, formula = NA,
-                                  smiles = NA, inchi = NA, inchikey = NA, predicted = FALSE)
+  car_tibble_tmp <- dplyr::as_tibble(matrix(NA, nrow = 1, ncol = ncol_lc_tibble, dimnames = list(NULL, lc_tibble_col_name)))
+  car_tibble_tmp$rt <- deadTime
+  car_tibble_tmp$lc <- -1
+  car_tibble_tmp$ri <- -100
+  # car_tibble_tmp <- dplyr::tibble(id = NA, name = NA, rt = deadTime, lc = -1,
+  #                                 ri = -100, exactmass = NA, formula = NA,
+  #                                 smiles = NA, inchi = NA, inchikey = NA, predicted = FALSE)
   lc_tibble <- rbind(car_tibble_tmp, lc_tibble)
   return(lc_tibble)
 }
