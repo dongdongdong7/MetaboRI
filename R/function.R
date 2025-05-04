@@ -214,6 +214,52 @@ rt2ri <- function(rt, experimental_lc){
   ri <- RIm + (RIn - RIm) * ((rt - RTm) / (RTn - RTm))
   return(ri)
 }
+
+#' @title ri2rt
+#' @description
+#' Convert retention index to retention time
+#' @param ri retention index
+#' @param experimental_lc
+#' This is the lc_tibble of the correction metabolite corresponding to the experimental data
+#' @return numeric
+#' @export
+#' @examples
+#' data("experimental_data")
+#' data("experimental_car")
+#' data("standard_car")
+#' ResList <- lc2rt(lc_tibble = experimental_car, targetRt = max(experimental_data$rt))
+#' experimental_car <- ResList$lc_tibble
+#' ResList$p
+#' ResList <- lc2rt(lc_tibble = standard_car, targetRt = max(experimental_data$rt))
+#' standard_car <- ResList$lc_tibble
+#' ResList$p
+#' experimental_car <- deadTime_add(lc_tibble = experimental_car, deadTime = min(experimental_data$rt))
+#' standard_car <- deadTime_add(lc_tibble = standard_car, deadTime = min(experimental_data$rt))
+#' ResList <- compare_lc_tibble(experimental_lc = experimental_car, standard_lc = standard_car)
+#' experimental_car <- ResList$experimental_lc
+#' standard_car <- ResList$standard_lc
+#' experimental_data$ri <- sapply(experimental_data$rt, function(x) {
+#'   rt2ri(x, experimental_lc = experimental_car)
+#' })
+#' rt <- sapply(experimental_data$ri, function(x) {
+#'   ri2rt(x, experimental_lc = experimental_car)
+#' })
+ri2rt <- function(ri, experimental_lc){
+  idx <- which(experimental_lc$ri == ri)
+  if(length(idx) == 1){
+    rt <- experimental_lc[idx, ]$rt
+    return(rt)
+  }
+  experimental_lc_m <- experimental_lc[experimental_lc$ri < ri, ]
+  experimental_lc_n <- experimental_lc[experimental_lc$ri > ri, ]
+  RIm <- experimental_lc_m[nrow(experimental_lc_m), ]$ri
+  RIn <- experimental_lc_n[1, ]$ri
+  RTm <- experimental_lc_m[nrow(experimental_lc_m), ]$rt
+  RTn <- experimental_lc_n[1, ]$rt
+  rt <- RTm + (RTn - RTm) * ((ri - RIm) / (RIn - RIm))
+  return(rt)
+}
+
 #' @title orignRT2newRT
 #' @description
 #' Convert experimental retention time to standard retention time.
